@@ -3,7 +3,7 @@ from operator import pos
 from flask import(
     render_template, Blueprint, flash, g, redirect, request, url_for
 )
-
+from markupsafe import Markup
 from werkzeug.exceptions import abort
 
 from myblog.models.post import Post
@@ -12,7 +12,6 @@ from myblog.models.user import User
 from myblog.views.auth import login_required
 
 from myblog import db
-
 blog = Blueprint('blog', __name__)
 
 #Obtner un ususario
@@ -24,6 +23,10 @@ def get_user(id):
 def index():
     posts = Post.query.all()
     posts = list(reversed(posts))
+    # Filtrar y marcar como seguro el contenido HTML de cada publicación
+    for post in posts:
+        post.body = Markup(post.body)
+
     db.session.commit()
     return render_template('blog/index.html', posts = posts, get_user=get_user)
 
@@ -104,5 +107,9 @@ def delete(id):
 def profile(id):
     user_id = get_user(id)
     posts = Post.query.filter_by(author=id).all()
+    posts = list(reversed(posts))
+    for post in posts:
+        post.body = Markup(post.body)
+
     db.session.commit()
     return render_template('blog/profile.html', posts=posts, get_user=get_user, user_id=user_id)

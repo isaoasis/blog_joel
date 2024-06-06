@@ -84,6 +84,10 @@ article header .about{
     color: #707070;
     font-size: 18px;
 }
+.about {
+    display: flex;
+    flex-direction: row-reverse;
+}
 
 /*Formularios*/
 form{

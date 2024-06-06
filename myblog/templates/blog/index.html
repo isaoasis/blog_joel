@@ -12,10 +12,7 @@
             <header>
                 <div>
                     <h3>{{ post.title }}</h3>
-                    <div class="about">
-                        <a href="{{ url_for('blog.profile', id=post.author) }}">Autor: {{ get_user(post.author).username }}</a>
-                        Fecha: {{ post.created.strftime('%d-%m-%Y') }}
-                    </div>
+
                 </div>
                 <div>
                     {% if g.user.id == post.author %}
@@ -24,9 +21,24 @@
                     {% endif %}
                 </div>
             </header>
-            <div>
-                <p>{{ post.body }}</p>
+            <div class="ckeditor">
+                {{ post.body | safe }}
+                <hr style="margin-top: 5px;">
+                <div class="about">
+                    Fecha: {{ post.created.strftime('%d-%m-%Y') }}
+                    <a style="margin-right: 8px;" href="{{ url_for('blog.profile', id=post.author) }}">Autor: {{ get_user(post.author).username }}</a>
+                </div>
+                <hr style="margin-top: 5px;">
             </div>
         </article>
     {% endfor %}
 {% endblock %}
+    <!-- Scripts al final del cuerpo -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '.ckeditor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>

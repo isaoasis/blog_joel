@@ -16,15 +16,15 @@
         <h3>{{ post.title }}</h3>
     </header>
     <div>
-        <p>{{ post.body }}</p>
+        <p>{{ post.body | safe }}</p>
     </div>
     <div>
-        <a href="{{ url_for('blog.profile', id=post.author) }}">Autor: {{ get_user(post.author).username }}</a>
+        <a style="margin-left: 8px;" href="{{ url_for('blog.profile', id=post.author) }}">Autor: {{ get_user(post.author).username }}</a>
         Fecha: {{ post.created.strftime('%d-%m-%Y') }}
-        <div>
+        <div style="display: flex; flex-direction: row-reverse;">
             {% if g.user.id == post.author %}
-            <a href="{{ url_for('blog.update', id=post.id) }}">Editar</a>
             <a href="{{ url_for('blog.delete', id=post.id) }}">Eliminar</a>
+            <a href="{{ url_for('blog.update', id=post.id) }}">Editar</a>
             {% endif %}
         </div>
     </div>
@@ -32,3 +32,12 @@
 {% endfor %}
 
 {% endblock %}
+    <!-- Scripts al final del cuerpo -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '.ckeditor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>

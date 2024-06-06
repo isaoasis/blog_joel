@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <div style="display: flex;">
+        <img src="{{ url_for('static', filename='img/user.png') }}" alt="">
+        <h2>{% block title %}Perfil de {{ user_id.username }} {% endblock %}</h2>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<h1>Todas las publicaciones</h1>
+{% for post in posts %}   
+<article>
+    <header>
+        <h3>{{ post.title }}</h3>
+    </header>
+    <div>
+        <p>{{ post.body }}</p>
+    </div>
+    <div>
+        <a href="{{ url_for('blog.profile', id=post.author) }}">Autor: {{ get_user(post.author).username }}</a>
+        Fecha: {{ post.created.strftime('%d-%m-%Y') }}
+        <div>
+            {% if g.user.id == post.author %}
+            <a href="{{ url_for('blog.update', id=post.id) }}">Editar</a>
+            <a href="{{ url_for('blog.delete', id=post.id) }}">Eliminar</a>
+            {% endif %}
+        </div>
+    </div>
+</article>
+{% endfor %}
+
+{% endblock %}

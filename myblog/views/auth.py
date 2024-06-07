@@ -50,9 +50,9 @@ def login():
         user = User.query.filter_by(username = username).first()
 
         if user == None:
-            error = 'Nombre de usuario incorrecto'
+            error = 'Datos incorrecto'
         elif not check_password_hash(user.password, password):
-            error = 'Contraseña incorrecta'
+            error = 'Datos incorrecto'
 
         if error is None:
             session.clear()

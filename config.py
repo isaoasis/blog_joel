@@ -4,7 +4,7 @@ class Config:
 
     #Configuración de base dedatos 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://if0_36693380:6mAXMWKTwdumAOk@sql209.infinityfree.com:3306/if0_36693380_blog_db"
+    SQLALCHEMY_DATABASE_URI = "postgres://default:23qDaGdszpOx@ep-flat-smoke-a4i9zxww.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
     
 class ProductionConfig(Config):
     DEBUG = False

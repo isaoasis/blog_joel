@@ -9,7 +9,7 @@ app.config.from_object('config.DevelopmentConfig')
 # Inicializar la base de datos
 db = SQLAlchemy(app)
 
-#Importar vistar
+# Importar vistas
 from myblog.views.auth import auth
 app.register_blueprint(auth)
 
